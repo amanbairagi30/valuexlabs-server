@@ -40,7 +40,7 @@ exports.sendMail = async (req, res) => {
         })
 
 
-        const recipients = ["aman   bairagi1089@gmail.com", "dakshsinghk2524@gmail.com"];
+        const recipients = [process.env.MEMBER1, process.env.MEMBER2];
 
         const Finalmessage = {
             from: process.env.EMAIL,
