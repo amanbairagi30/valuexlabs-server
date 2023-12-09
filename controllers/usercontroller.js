@@ -27,7 +27,7 @@ exports.registerUser = async (req, res, next) => {
 exports.sendMail = async (req, res) => {
     // console.log("--> next ,In the mail ")
 
-    let { name, email, message } = req.body;
+    let { name, email, message, projectType } = req.body;
 
     try {
         const transporter = nodemailer.createTransport({
@@ -45,9 +45,22 @@ exports.sendMail = async (req, res) => {
         const Finalmessage = {
             from: process.env.EMAIL,
             to: recipients,
-            subject: "There is a new connection here",
-            text: `Greetings from ${name},\nEmail : ${email}\ni want to say ${message}`
+            subject: "New Connection Alert 🔊",
+            html: `
+            <div>
+                <p style="font-size : 1.5rem; color:#fff;">We have a new connection! 🙌</p>
+                <br/>
+                <p style="margin-top : 2rem; color:#fff;">Greetings from <strong>${name}</strong>,</p>
+                <ul style="margin-top : 2rem; color:#fff;">
+                    <li>📩<strong>Email:</strong> ${email}</li>
+                    <li>📜<strong>Project Required</strong>: ${projectType}</li>
+                    <li>📂<strong>Message:</strong> ${message}</li>
+                </ul>
+                <p style="color:#fff;">Let's Close this Deal Team !🚀<br/> <strong>ValueXlabs</strong></p>
+            </div>
+        `
         }
+
         const info = await transporter.sendMail(Finalmessage)
         if (info) {
 
